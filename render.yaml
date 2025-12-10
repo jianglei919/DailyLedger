@@ -1,0 +1,45 @@
+services:
+  # 后端 API 服务
+  - type: web
+    name: daily-ledger-api
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false # 需要在 Render Dashboard 手动设置
+      - key: JWT_SECRET
+        generateValue: true # Render 自动生成随机密钥
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: CORS_ORIGIN
+        fromService:
+          type: web
+          name: daily-ledger-client
+          property: url
+
+  # 前端静态网站
+  - type: web
+    name: daily-ledger-client
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: cd client && npm install && REACT_APP_API_URL=$DAILY_LEDGER_API_URL npm run build
+    staticPublishPath: ./client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          type: web
+          name: daily-ledger-api
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

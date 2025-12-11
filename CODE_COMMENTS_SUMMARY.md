@@ -252,26 +252,6 @@ Daily Ledger 项目
 
 ---
 
-## 文件修改历史
-
-| 文件                                  | 修改时间 | 状态      |
-| ------------------------------------- | -------- | --------- |
-| server/src/index.js                   | 2024     | ✅ 完成   |
-| server/src/models/\*.js               | 2024     | ✅ 完成   |
-| server/src/controllers/\*.js          | 2024     | ✅ 完成   |
-| server/src/routes/\*.js               | 2024     | ✅ 完成   |
-| server/src/middleware/auth.js         | 2024     | ✅ 完成   |
-| server/src/config/\*.js               | 2024     | ✅ 完成   |
-| client/src/App.js                     | 2024     | ✅ 完成   |
-| client/src/context/AuthContext.js     | 2024     | ✅ 完成   |
-| client/src/services/api.js            | 2024     | ✅ 完成   |
-| client/src/components/PrivateRoute.js | 2024     | ✅ 完成   |
-| client/src/components/Navbar.js       | 2024     | ✅ 完成   |
-| client/src/i18n/config.js             | 2024     | ⏳ 待完成 |
-| client/src/pages/\*.js                | 2024     | ⏳ 待完成 |
-
----
-
 ## 相关文档链接
 
 - 📖 [项目结构文档](./PROJECT_STRUCTURE.md)
@@ -279,6 +259,3 @@ Daily Ledger 项目
 - ⚙️ [部署检查清单](./DEPLOYMENT_CHECKLIST.md)
 
 ---
-
-**文档更新于**: 2024 年
-**作者**: GitHub Copilot + 开发团队

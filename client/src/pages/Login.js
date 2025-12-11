@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
-import './Auth.css';
+import '../css/Auth.css';
 
 const Login = () => {
   const { t } = useTranslation();

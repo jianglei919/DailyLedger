@@ -9,7 +9,6 @@
 ```
 Trip_Wage/
 ├── server/                    # 后端
-│   ├── .env                   # 当前使用的配置（不提交到Git）
 │   ├── .env.development       # 开发环境配置
 │   ├── .env.production        # 生产环境配置
 │   └── .env.example           # 配置示例文件
@@ -25,6 +24,7 @@ Trip_Wage/
 ### 后端（Server）
 
 #### 开发环境
+
 ```bash
 cd server
 npm run dev                    # 使用默认配置
@@ -33,12 +33,14 @@ npm run dev:firebase           # 强制使用 Firebase
 ```
 
 #### 生产环境
+
 ```bash
 cd server
 npm run prod                   # 使用生产配置
 ```
 
 #### 手动指定环境
+
 ```bash
 # 使用开发配置
 NODE_ENV=development npm start
@@ -50,6 +52,7 @@ NODE_ENV=production npm start
 ### 前端（Client）
 
 #### 开发环境
+
 ```bash
 cd client
 npm install                    # 首次需要安装 env-cmd
@@ -58,6 +61,7 @@ npm run start:dev              # 明确指定开发环境
 ```
 
 #### 生产构建
+
 ```bash
 cd client
 npm run build:prod             # 生产环境构建
@@ -68,32 +72,32 @@ npm run build:dev              # 开发环境构建（用于测试）
 
 ### 后端环境变量
 
-| 变量 | 开发环境 | 生产环境 | 说明 |
-|------|---------|---------|------|
-| `NODE_ENV` | development | production | 运行环境 |
-| `PORT` | 5050 | 5050 | 服务端口 |
-| `DB_TYPE` | firebase | mongodb | 数据库类型 |
-| `MONGODB_URL` | 本地地址 | Atlas云端 | MongoDB连接 |
-| `JWT_SECRET` | 测试密钥 | 强密码 | JWT加密 |
-| `LOG_LEVEL` | debug | info | 日志级别 |
-| `CORS_ORIGIN` | localhost:3000 | 生产域名 | CORS配置 |
+| 变量          | 开发环境       | 生产环境   | 说明         |
+| ------------- | -------------- | ---------- | ------------ |
+| `NODE_ENV`    | development    | production | 运行环境     |
+| `PORT`        | 5050           | 5050       | 服务端口     |
+| `DB_TYPE`     | firebase       | mongodb    | 数据库类型   |
+| `MONGODB_URL` | 本地地址       | Atlas 云端 | MongoDB 连接 |
+| `JWT_SECRET`  | 测试密钥       | 强密码     | JWT 加密     |
+| `LOG_LEVEL`   | debug          | info       | 日志级别     |
+| `CORS_ORIGIN` | localhost:3000 | 生产域名   | CORS 配置    |
 
 ### 前端环境变量
 
-| 变量 | 开发环境 | 生产环境 | 说明 |
-|------|---------|---------|------|
-| `REACT_APP_ENV` | development | production | 环境标识 |
-| `REACT_APP_API_URL` | localhost:5050 | 生产API | API地址 |
-| `REACT_APP_DEBUG` | true | false | 调试模式 |
-| `REACT_APP_API_TIMEOUT` | 10000 | 30000 | 超时时间(ms) |
-| `GENERATE_SOURCEMAP` | - | false | 源码映射 |
+| 变量                    | 开发环境       | 生产环境   | 说明         |
+| ----------------------- | -------------- | ---------- | ------------ |
+| `REACT_APP_ENV`         | development    | production | 环境标识     |
+| `REACT_APP_API_URL`     | localhost:5050 | 生产 API   | API 地址     |
+| `REACT_APP_DEBUG`       | true           | false      | 调试模式     |
+| `REACT_APP_API_TIMEOUT` | 10000          | 30000      | 超时时间(ms) |
+| `GENERATE_SOURCEMAP`    | -              | false      | 源码映射     |
 
 ## 🔧 配置优先级
 
 环境变量加载优先级（从高到低）：
 
 1. **命令行参数**：`NODE_ENV=production npm start`
-2. **`.env.local`**：本地覆盖（不提交Git）
+2. **`.env.local`**：本地覆盖（不提交 Git）
 3. **`.env.development` / `.env.production`**：环境配置
 4. **`.env`**：默认配置
 
@@ -131,11 +135,13 @@ npm install
 ## 🔐 安全注意事项
 
 ### ⚠️ 不要提交的文件
+
 - `.env`
 - `.env.local`
 - `serviceAccountKey.json`
 
 ### ✅ 可以提交的文件
+
 - `.env.example`
 - `.env.development` (去除敏感信息)
 - `.env.production` (去除敏感信息)
@@ -143,11 +149,13 @@ npm install
 ### 🔒 生产环境最佳实践
 
 1. **使用强密码**
+
    ```env
    JWT_SECRET=use_a_very_strong_random_password_here
    ```
 
 2. **使用环境变量**（而非配置文件）
+
    ```bash
    # 部署平台（如 Heroku, Vercel）设置环境变量
    export JWT_SECRET="your-secret"
@@ -155,6 +163,7 @@ npm install
    ```
 
 3. **限制 CORS**
+
    ```env
    CORS_ORIGIN=https://your-production-domain.com
    ```
@@ -179,47 +188,55 @@ npm run switch-db firebase
 ## 🐛 常见问题
 
 ### Q: 修改环境变量后不生效？
+
 **A:** 需要重启服务器
+
 ```bash
 # 后端：重启 nodemon 或 npm run dev
 # 前端：重启 npm start
 ```
 
 ### Q: 如何知道当前使用的是哪个环境？
+
 **A:** 查看启动日志
+
 ```
 🚀 Initializing database: MONGODB
 Node Environment: development
 ```
 
 ### Q: 前端环境变量不生效？
+
 **A:** 确保：
+
 1. 变量以 `REACT_APP_` 开头
 2. 已重启开发服务器
 3. 使用 `process.env.REACT_APP_变量名` 访问
 
 ### Q: 如何在代码中获取环境？
-**A:** 
+
+**A:**
+
 ```javascript
 // 后端
 const env = process.env.NODE_ENV;
-const isDev = env === 'development';
+const isDev = env === "development";
 
 // 前端
 const env = process.env.REACT_APP_ENV;
-const isDev = env === 'development';
+const isDev = env === "development";
 ```
 
 ## 📊 环境对比
 
-| 特性 | 开发环境 | 生产环境 |
-|------|---------|---------|
-| 数据库 | 本地/测试 | 云端/正式 |
-| 日志 | 详细调试 | 关键信息 |
-| 源码映射 | 启用 | 禁用 |
-| 缓存 | 禁用 | 启用 |
-| 压缩 | 否 | 是 |
-| 错误堆栈 | 完整 | 简化 |
+| 特性     | 开发环境  | 生产环境  |
+| -------- | --------- | --------- |
+| 数据库   | 本地/测试 | 云端/正式 |
+| 日志     | 详细调试  | 关键信息  |
+| 源码映射 | 启用      | 禁用      |
+| 缓存     | 禁用      | 启用      |
+| 压缩     | 否        | 是        |
+| 错误堆栈 | 完整      | 简化      |
 
 ## 🚢 部署检查清单
 

@@ -170,7 +170,11 @@ DailyLedger/
 │   ├── src/
 │   │   ├── App.js                  # 应用入口 ✓
 │   │   ├── index.js                # React 挂载点 ✓
-│   │   ├── App.css                 # 全局样式 ✓
+│   │   ├── css/                    # 自定义样式
+│   │   │   ├── Index.css           # 首页样式 ✓
+│   │   │   ├── App.css             # 全局样式 ✓
+│   │   │   └── Auth.css            # 认证样式 ✓
+│   │   │
 │   │   ├── components/             # 可复用组件
 │   │   │   ├── Navbar.js           # 导航栏 ✓ (含注释)
 │   │   │   ├── PrivateRoute.js     # 路由保护 ✓ (含注释)
@@ -185,8 +189,7 @@ DailyLedger/
 │   │   │   ├── Transactions.js     # 交易管理 ✓
 │   │   │   ├── Statistics.js       # 统计分析 ✓
 │   │   │   ├── Profile.js          # 用户资料 ✓
-│   │   │   ├── DayDetail.js        # 日期详情 ✓
-│   │   │   └── Auth.css            # 认证样式 ✓
+│   │   │   └── DayDetail.js        # 日期详情 ✓
 │   │   │
 │   │   ├── context/                # 全局状态管理
 │   │   │   └── AuthContext.js      # 认证状态 ✓ (含注释)

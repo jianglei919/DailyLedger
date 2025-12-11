@@ -73,7 +73,7 @@ git push -u origin main
 5. **获取 URLs**
 
    - 后端 URL: `https://daily-ledger-api.onrender.com`
-   - 前端 URL: `https://daily-ledger-client.onrender.com`
+   - 前端 URL: `https://daily-ledger.onrender.com`
 
 ## 方法二：手动部署
 
@@ -135,7 +135,7 @@ const api = axios.create({
    - 配置如下：
 
 ```
-Name: daily-ledger-client
+Name: daily-ledger
 Branch: main
 Root Directory: client
 Build Command: npm install && npm run build

@@ -43,7 +43,7 @@ git push origin main
 部署完成后，记录以下 URLs：
 
 - **后端 API**: `https://daily-ledger-api.onrender.com`
-- **前端网站**: `https://daily-ledger-client.onrender.com`
+- **前端网站**: `https://daily-ledger.onrender.com`
 
 ### 4. 验证
 

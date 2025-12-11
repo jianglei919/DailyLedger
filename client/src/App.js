@@ -16,7 +16,7 @@ import Profile from './pages/Profile';         // 个人资料页面
 import DayDetail from './pages/DayDetail';       // 单日明细页面
 import Statistics from './pages/Statistics';      // 统计分析页面
 import './i18n/config';  // 国际化配置
-import './App.css';    // 全局样式
+import './css/App.css';    // 全局样式
 
 /**
  * 路由配置组件

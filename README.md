@@ -370,7 +370,7 @@ services:
 
   # 前端服务
   - type: web
-    name: daily-ledger-client
+    name: daily-ledger
     env: static
     region: oregon
     plan: free
@@ -449,7 +449,7 @@ const api = axios.create({
    - 配置如下：
 
 ```
-Name: daily-ledger-client
+Name: daily-ledger
 Branch: main
 Root Directory: client
 Build Command: npm install && npm run build

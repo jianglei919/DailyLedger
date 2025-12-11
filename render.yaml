@@ -22,12 +22,12 @@ services:
       - key: CORS_ORIGIN
         fromService:
           type: web
-          name: daily-ledger-client
+          name: daily-ledger
           property: url
 
   # 前端静态网站
   - type: web
-    name: daily-ledger-client
+    name: daily-ledger
     env: static
     region: oregon
     plan: free

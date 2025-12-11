@@ -152,7 +152,7 @@ docker stop mongodb
 ```env
 NODE_ENV=development
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/dailyledger
+MONGODB_URI=mongodb://localhost:27017/DailyLedger
 JWT_SECRET=你的密钥(生产环境需32字符以上)
 JWT_EXPIRE=7d
 CORS_ORIGIN=http://localhost:3000

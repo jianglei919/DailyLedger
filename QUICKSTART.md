@@ -28,7 +28,7 @@ Edit `server/.env`:
 ```env
 NODE_ENV=development
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/dailyledger
+MONGODB_URI=mongodb://localhost:27017/DailyLedger
 JWT_SECRET=your_secret_key_change_this_in_production
 JWT_EXPIRE=7d
 CORS_ORIGIN=http://localhost:3000

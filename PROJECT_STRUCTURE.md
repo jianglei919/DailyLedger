@@ -409,9 +409,9 @@ NODE_ENV=development
 PORT=5000
 
 # 数据库配置
-MONGODB_URI=mongodb://localhost:27017/daily-ledger
+MONGODB_URI=mongodb://localhost:27017/DailyLedger
 # 或使用 MongoDB Atlas
-# MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/daily-ledger
+# MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/DailyLedger
 
 # JWT 配置
 JWT_SECRET=your_jwt_secret_key_change_this_in_production

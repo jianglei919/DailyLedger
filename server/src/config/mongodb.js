@@ -23,7 +23,7 @@ export const connectMongoDB = async () => {
   try {
     // 从环境变量读取 MongoDB URI，否则使用默认本地地址
     const mongoUri =
-      process.env.MONGODB_URI || process.env.MONGODB_URL || 'mongodb://localhost:27017/daily-ledger';
+      process.env.MONGODB_URI || process.env.MONGODB_URL;
     
     // 连接 MongoDB
     await mongoose.connect(mongoUri, {

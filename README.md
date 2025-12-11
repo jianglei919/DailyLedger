@@ -188,7 +188,7 @@ NODE_ENV=development
 PORT=5000
 
 # MongoDB 连接
-MONGODB_URI=mongodb://localhost:27017/daily-ledger
+MONGODB_URI=mongodb://localhost:27017/DailyLedger
 
 # JWT 配置
 JWT_SECRET=your_jwt_secret_key_change_this_in_production

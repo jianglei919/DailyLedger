@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Daily Ledger - React Frontend with React Bootstrap",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "axios": "^1.6.2",
     "bootstrap": "^5.3.8",

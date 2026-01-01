@@ -5,7 +5,7 @@ services:
     env: node
     region: oregon
     plan: free
-    buildCommand: cd server && npm install
+    buildCommand: cd server && npm install --legacy-peer-deps
     startCommand: cd server && npm start
     healthCheckPath: /api/health
     envVars:
@@ -29,7 +29,7 @@ services:
   - type: static
     name: daily-ledger
     plan: starter
-    buildCommand: cd client && npm install && REACT_APP_API_URL=$DAILY_LEDGER_API_URL npm run build
+    buildCommand: cd client && npm install --legacy-peer-deps && REACT_APP_API_URL=$DAILY_LEDGER_API_URL npm run build
     staticPublishPath: ./client/build
     envVars:
       - key: REACT_APP_API_URL

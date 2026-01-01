@@ -23,13 +23,12 @@ services:
         fromService:
           type: web
           name: daily-ledger
-          property: url
+          envVarKey: RENDER_EXTERNAL_URL
 
   # 前端静态网站
   - type: web
     name: daily-ledger
     env: static
-    region: oregon
     plan: free
     buildCommand: cd client && npm install && REACT_APP_API_URL=$DAILY_LEDGER_API_URL npm run build
     staticPublishPath: ./client/build

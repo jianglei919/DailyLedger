@@ -26,9 +26,8 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
 
   # 前端静态网站
-  - type: web
+  - type: static
     name: daily-ledger
-    env: static
     plan: starter
     buildCommand: cd client && npm install && REACT_APP_API_URL=$DAILY_LEDGER_API_URL npm run build
     staticPublishPath: ./client/build

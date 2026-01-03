@@ -57,8 +57,18 @@ function Dashboard() {
 
   const currentMonthTransactions = useMemo(() => {
     return transactions.filter((tx) => {
-      const d = new Date(tx.date);
-      const txMonthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      // 使用 dateString 字段（如果有）或从 date 中提取日期（避免时区问题）
+      let txMonthKey;
+      if (tx.dateString) {
+        // 后端已提供 dateString (YYYY-MM-DD)，直接提取年月
+        const [year, month] = tx.dateString.split('-');
+        txMonthKey = `${year}-${month}`;
+      } else {
+        // 兼容旧数据：从 date 字段提取，但使用 UTC 时间避免时区问题
+        const d = new Date(tx.date);
+        // 使用 UTC 方法获取年月，避免本地时区影响
+        txMonthKey = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`;
+      }
       return txMonthKey === currentMonthKey;
     });
   }, [transactions, currentMonthKey]);
@@ -306,9 +316,9 @@ function Dashboard() {
                                     <span>{tx.categoryId?.name || t('common.uncategorized')}</span>
                                   </div>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'nowrap' }}>
                                   {tx.labelId ? (
-                                    <span className="label-pill" style={{ backgroundColor: tx.labelId.color }}>
+                                    <span className="label-pill" style={{ backgroundColor: tx.labelId.color, whiteSpace: 'nowrap' }}>
                                       {tx.labelId.name}
                                     </span>
                                   ) : (

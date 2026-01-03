@@ -27,6 +27,15 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']  // 允许的请求头
 };
 app.use(cors(corsOptions));  // 应用 CORS 中间件
+
+// 禁用缓存（开发环境）
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
 app.use(express.json());  // 解析 JSON 请求体
 app.use(express.urlencoded({ extended: true }));  // 解析 URL 编码的请求体
 

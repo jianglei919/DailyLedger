@@ -63,11 +63,16 @@
     "title": "统计",
     "categoryDistribution": "分类分布",
     "spendingOverview": "支出概览",
+    "week": "周",
+    "month": "月",
+    "year": "年",
     "labelDistribution": "标签分布",
     "topSpending": "顶部支出分类",
     "category": "分类",
     "amount": "金额",
-    "percentage": "百分比"
+    "percentage": "百分比",
+    "expenses": "支出",
+    "income": "收入"
   },
   "profile": {
     "title": "个人资料",

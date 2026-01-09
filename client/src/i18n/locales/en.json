@@ -63,11 +63,16 @@
     "title": "Statistics",
     "categoryDistribution": "Category Distribution",
     "spendingOverview": "Spending Overview",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
     "labelDistribution": "Label Distribution",
     "topSpending": "Top Spending Categories",
     "category": "Category",
     "amount": "Amount",
-    "percentage": "Percentage"
+    "percentage": "Percentage",
+    "expenses": "Expenses",
+    "income": "Income"
   },
   "profile": {
     "title": "Profile",

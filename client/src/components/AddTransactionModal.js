@@ -329,18 +329,22 @@ function CategoryManagerModal({ show, onHide, categories, onUpdate }) {
         
         <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
           <Tab eventKey="Expenses" title="💸 Expenses">
-            <CategoryList
-              categories={filteredCategories}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+            <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
+              <CategoryList
+                categories={filteredCategories}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </div>
           </Tab>
           <Tab eventKey="Income" title="💰 Income">
-            <CategoryList
-              categories={filteredCategories}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+            <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
+              <CategoryList
+                categories={filteredCategories}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </div>
           </Tab>
         </Tabs>
 
@@ -484,32 +488,34 @@ function LabelManagerModal({ show, onHide, labels, onUpdate }) {
         {error && <div className="alert alert-danger alert-sm">{error}</div>}
         
         {labels.length > 0 ? (
-          <ListGroup variant="flush" className="mb-3">
-            {labels.map(label => (
-              <ListGroup.Item key={label._id} className="d-flex justify-content-between align-items-center py-2">
-                <span className="d-flex align-items-center gap-2">
-                  <span
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                      borderRadius: '50%',
-                      backgroundColor: label.color,
-                      display: 'inline-block'
-                    }}
-                  />
-                  {label.name}
-                </span>
-                <div className="d-flex gap-1">
-                  <Button size="sm" variant="light" className="text-primary p-1" onClick={() => handleEdit(label)} title="Edit">
-                    ✏️
-                  </Button>
-                  <Button size="sm" variant="light" className="text-danger p-1" onClick={() => handleDelete(label._id)} title="Delete">
-                    🗑️
-                  </Button>
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+          <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
+            <ListGroup variant="flush" className="mb-3">
+              {labels.map(label => (
+                <ListGroup.Item key={label._id} className="d-flex justify-content-between align-items-center py-2">
+                  <span className="d-flex align-items-center gap-2">
+                    <span
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        borderRadius: '50%',
+                        backgroundColor: label.color,
+                        display: 'inline-block'
+                      }}
+                    />
+                    {label.name}
+                  </span>
+                  <div className="d-flex gap-1">
+                    <Button size="sm" variant="light" className="text-primary p-1" onClick={() => handleEdit(label)} title="Edit">
+                      ✏️
+                    </Button>
+                    <Button size="sm" variant="light" className="text-danger p-1" onClick={() => handleDelete(label._id)} title="Delete">
+                      🗑️
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </div>
         ) : (
           <p className="text-muted text-center py-3">No labels yet</p>
         )}

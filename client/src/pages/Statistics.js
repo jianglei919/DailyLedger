@@ -53,19 +53,26 @@ function Statistics() {
   };
 
   const timeSeries = useMemo(() => {
-    const formatDate = (val) => {
-      if (!val) return null;
-      const d = new Date(val);
+    // Parse date from dateString (YYYY-MM-DD) or date field
+    const parseTransactionDate = (tx) => {
+      if (tx.dateString) {
+        // dateString format: YYYY-MM-DD (no timezone issues)
+        const parts = tx.dateString.split('-').map(p => parseInt(p, 10));
+        return new Date(parts[0], parts[1] - 1, parts[2]); // local date
+      }
+      // Fallback to date field
+      const d = new Date(tx.date);
       return Number.isNaN(d.getTime()) ? null : d;
     };
 
+    // Get week key: Sunday-based week, format: "YYYY-Wnn" based on week's Sunday
     const getWeekKey = (date) => {
-      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      const dayNum = d.getUTCDay() || 7;
-      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-      return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+      const d = new Date(date);
+      const day = d.getDay(); // 0 = Sunday
+      // Move to the Sunday of this week
+      const sunday = new Date(d);
+      sunday.setDate(d.getDate() - day);
+      return `${sunday.getFullYear()}-W${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
     };
 
     const aggregate = (periods, keyFn) => {
@@ -75,7 +82,7 @@ function Statistics() {
       }, {});
 
       transactions.forEach((tx) => {
-        const d = formatDate(tx.dateString || tx.date);
+        const d = parseTransactionDate(tx);
         if (!d) return;
         const key = keyFn(d);
         if (!buckets[key]) return;
@@ -93,16 +100,19 @@ function Statistics() {
     if (timeRange === 'week') {
       const periods = [];
       const now = new Date();
-      const anchor = new Date(now);
-      const day = anchor.getDay();
-      const diffToMonday = day === 0 ? -6 : 1 - day;
-      anchor.setDate(anchor.getDate() + diffToMonday);
+      // Find the Sunday of current week
+      const currentSunday = new Date(now);
+      currentSunday.setDate(now.getDate() - now.getDay());
 
+      // Generate last 8 weeks (Sunday to Saturday)
       for (let i = 7; i >= 0; i -= 1) {
-        const start = new Date(anchor);
-        start.setDate(start.getDate() - i * 7);
-        const key = getWeekKey(start);
-        const label = `${String(start.getMonth() + 1).padStart(2, '0')}/${String(start.getDate()).padStart(2, '0')}`;
+        const sunday = new Date(currentSunday);
+        sunday.setDate(currentSunday.getDate() - i * 7);
+        const saturday = new Date(sunday);
+        saturday.setDate(sunday.getDate() + 6);
+        
+        const key = getWeekKey(sunday);
+        const label = `${String(sunday.getMonth() + 1).padStart(2, '0')}/${String(sunday.getDate()).padStart(2, '0')}-${String(saturday.getMonth() + 1).padStart(2, '0')}/${String(saturday.getDate()).padStart(2, '0')}`;
         periods.push({ key, label });
       }
       return aggregate(periods, getWeekKey);

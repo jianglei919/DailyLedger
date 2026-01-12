@@ -86,11 +86,16 @@ export const AuthProvider = ({ children }) => {
   /**
    * 登出功能
    * 清除 localStorage 和用户状态
+   * @param {boolean} redirect - 是否重定向到登录页面
    */
-  const logout = () => {
+  const logout = (redirect = false) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    
+    if (redirect) {
+      window.location.href = '/login';
+    }
   };
 
   return (

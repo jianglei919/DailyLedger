@@ -24,6 +24,7 @@
     "registering": "Registering...",
     "loginFailed": "Login failed. Please try again.",
     "registrationFailed": "Registration failed. Please try again.",
+    "sessionExpired": "Your session has expired. Please login again.",
     "passwordsNoMatch": "Passwords do not match",
     "passwordTooShort": "Password must be at least 6 characters",
     "passwordMinLength": "Minimum 6 characters",
@@ -50,6 +51,8 @@
     "addTransaction": "Add Transaction",
     "transactionList": "Transaction List",
     "noTransactions": "No transactions found",
+    "noTransactionsThisMonth": "No transactions this month yet",
+    "transactions": "Transactions",
     "month": "Month",
     "selectMonth": "Select Month",
     "income": "Income",
@@ -57,7 +60,9 @@
     "category": "Category",
     "amount": "Amount",
     "date": "Date",
-    "label": "Label"
+    "label": "Label",
+    "today": "Today",
+    "yesterday": "Yesterday"
   },
   "statistics": {
     "title": "Statistics",

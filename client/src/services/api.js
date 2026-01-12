@@ -5,6 +5,7 @@
  */
 
 import axios from 'axios';
+import i18n from '../i18n/config';
 
 // API 基础 URL，优先使用环境变量
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
@@ -31,6 +32,29 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+/**
+ * 响应拦截器 - 处理认证错误
+ * 当收到 401 未授权错误时，清除本地存储并重定向到登录页面
+ */
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // 检查是否为 401 未授权错误
+    if (error.response && error.response.status === 401) {
+      // 清除本地存储的认证信息
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // 使用国际化的弹窗提示用户
+      alert(i18n.t('auth.sessionExpired'));
+      
+      // 重定向到登录页面
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
 );
 
 /**

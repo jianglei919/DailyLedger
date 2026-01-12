@@ -122,8 +122,8 @@ function Dashboard() {
     const diffMs = today.setHours(0, 0, 0, 0) - target.setHours(0, 0, 0, 0);
     const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
+    if (diffDays === 0) return t('dashboard.today');
+    if (diffDays === 1) return t('dashboard.yesterday');
     return target.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
   };
 
@@ -186,7 +186,7 @@ function Dashboard() {
               <Card.Body>
                 <div className="summary-card__icon">📊</div>
                 <div className="summary-card__content">
-                  <div className="summary-card__label">Transactions</div>
+                  <div className="summary-card__label">{t('dashboard.transactions')}</div>
                   <div className="summary-card__value">{stats.totalTransactions}</div>
                 </div>
               </Card.Body>
@@ -341,7 +341,7 @@ function Dashboard() {
                 </div>
               )
             ) : (
-              <p className="text-center text-muted py-5">No transactions this month yet</p>
+              <p className="text-center text-muted py-5">{t('dashboard.noTransactionsThisMonth')}</p>
             )}
           </Card.Body>
         </Card>

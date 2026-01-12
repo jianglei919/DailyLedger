@@ -172,18 +172,18 @@ function Statistics() {
       labels: timeSeries.labels,
       datasets: [
         {
-          label: 'Income',
+          label: t('statistics.income'),
           data: timeSeries.incomeData,
           backgroundColor: '#22c55e'
         },
         {
-          label: 'Expenses',
+          label: t('statistics.expenses'),
           data: timeSeries.expenseData,
           backgroundColor: '#ef4444'
         }
       ]
     }),
-    [timeSeries]
+    [timeSeries, t]
   );
 
   const categoryChartData = useMemo(
@@ -402,8 +402,8 @@ function Statistics() {
                     />
                     <label htmlFor="categoryToggle" className="toggle-switch-label">
                       <span className="toggle-switch-inner">
-                        <span className="toggle-switch-icon-off">💸 Expenses</span>
-                        <span className="toggle-switch-icon-on">💰 Income</span>
+                        <span className="toggle-switch-icon-off">💸 {t('statistics.expenses')}</span>
+                        <span className="toggle-switch-icon-on">💰 {t('statistics.income')}</span>
                       </span>
                       <span className="toggle-switch-switch" />
                     </label>
@@ -474,8 +474,8 @@ function Statistics() {
                     />
                     <label htmlFor="labelToggle" className="toggle-switch-label">
                       <span className="toggle-switch-inner">
-                        <span className="toggle-switch-icon-off">💸 Expenses</span>
-                        <span className="toggle-switch-icon-on">💰 Income</span>
+                        <span className="toggle-switch-icon-off">💸 {t('statistics.expenses')}</span>
+                        <span className="toggle-switch-icon-on">💰 {t('statistics.income')}</span>
                       </span>
                       <span className="toggle-switch-switch" />
                     </label>

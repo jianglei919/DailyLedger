@@ -24,6 +24,7 @@
     "registering": "注册中...",
     "loginFailed": "登录失败，请重试",
     "registrationFailed": "注册失败，请重试",
+    "sessionExpired": "您的登录已过期，请重新登录",
     "passwordsNoMatch": "两次输入的密码不一致",
     "passwordTooShort": "密码长度至少为6个字符",
     "passwordMinLength": "至少6个字符",
@@ -50,6 +51,8 @@
     "addTransaction": "添加交易",
     "transactionList": "交易列表",
     "noTransactions": "未找到交易",
+    "noTransactionsThisMonth": "本月暂无交易",
+    "transactions": "交易记录",
     "month": "月份",
     "selectMonth": "选择月份",
     "income": "收入",
@@ -57,7 +60,9 @@
     "category": "分类",
     "amount": "金额",
     "date": "日期",
-    "label": "标签"
+    "label": "标签",
+    "today": "今天",
+    "yesterday": "昨天"
   },
   "statistics": {
     "title": "统计",

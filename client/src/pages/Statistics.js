@@ -249,6 +249,8 @@ function Statistics() {
 
   const pieOptions = {
     responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 1,
     plugins: {
       legend: { display: true, position: 'right' },
       tooltip: {
@@ -390,25 +392,21 @@ function Statistics() {
               <Card.Header>
                 <div className="d-flex justify-content-between align-items-center gap-2 flex-wrap">
                   <div className="fw-bold">{t('statistics.categoryDistribution')}</div>
-                  <div className="d-flex align-items-stretch gap-2 w-100" role="group" aria-label="category type selector">
-                    <Button
-                      size="sm"
-                      variant={categoryType === 'Expenses' ? 'primary' : 'outline-primary'}
-                      className="rounded-pill w-100"
-                      style={{ flex: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
-                      onClick={() => setCategoryType('Expenses')}
-                    >
-                      💸 Expenses
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={categoryType === 'Income' ? 'primary' : 'outline-primary'}
-                      className="rounded-pill w-100"
-                      style={{ flex: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
-                      onClick={() => setCategoryType('Income')}
-                    >
-                      💰 Income
-                    </Button>
+                  <div className="toggle-switch-container" role="group" aria-label="category type selector">
+                    <input
+                      type="checkbox"
+                      id="categoryToggle"
+                      className="toggle-switch-input"
+                      checked={categoryType === 'Income'}
+                      onChange={(e) => setCategoryType(e.target.checked ? 'Income' : 'Expenses')}
+                    />
+                    <label htmlFor="categoryToggle" className="toggle-switch-label">
+                      <span className="toggle-switch-inner">
+                        <span className="toggle-switch-icon-off">💸 Expenses</span>
+                        <span className="toggle-switch-icon-on">💰 Income</span>
+                      </span>
+                      <span className="toggle-switch-switch" />
+                    </label>
                   </div>
                 </div>
               </Card.Header>
@@ -421,13 +419,13 @@ function Statistics() {
                   <>
                     <Doughnut data={categoryChartData} options={pieOptions} />
                     {visibleCategoryTotals.length > 0 && (
-                      <div className="mt-3 small">
+                      <div className="small category-list-container">
                         <div className="d-flex text-muted fw-semibold mb-2">
                           <div style={{ width: '40%' }}>{t('statistics.category')}</div>
                           <div className="flex-grow-1 text-end">{t(`statistics.${categoryType.toLowerCase()}`)}</div>
                         </div>
-                        <div className="d-flex flex-column gap-2">
-                          {visibleCategoryTotals.slice(0, 10).map((cat) => (
+                        <div className="d-flex flex-column gap-2 category-list-scroll">
+                          {visibleCategoryTotals.map((cat) => (
                             <div key={cat.id} className="d-flex align-items-center gap-2" aria-label={`category-${categoryType}`}>
                               <div
                                 className="ledger-row__icon"
@@ -466,25 +464,21 @@ function Statistics() {
               <Card.Header>
                 <div className="d-flex justify-content-between align-items-center gap-2 flex-wrap">
                   <div className="fw-bold">{t('statistics.labelDistribution')}</div>
-                  <div className="d-flex align-items-stretch gap-2 w-100" role="group" aria-label="label type selector">
-                    <Button
-                      size="sm"
-                      variant={labelType === 'Expenses' ? 'primary' : 'outline-primary'}
-                      className="rounded-pill w-100"
-                      style={{ flex: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
-                      onClick={() => setLabelType('Expenses')}
-                    >
-                      💸 Expenses
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={labelType === 'Income' ? 'primary' : 'outline-primary'}
-                      className="rounded-pill w-100"
-                      style={{ flex: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
-                      onClick={() => setLabelType('Income')}
-                    >
-                      💰 Income
-                    </Button>
+                  <div className="toggle-switch-container" role="group" aria-label="label type selector">
+                    <input
+                      type="checkbox"
+                      id="labelToggle"
+                      className="toggle-switch-input"
+                      checked={labelType === 'Income'}
+                      onChange={(e) => setLabelType(e.target.checked ? 'Income' : 'Expenses')}
+                    />
+                    <label htmlFor="labelToggle" className="toggle-switch-label">
+                      <span className="toggle-switch-inner">
+                        <span className="toggle-switch-icon-off">💸 Expenses</span>
+                        <span className="toggle-switch-icon-on">💰 Income</span>
+                      </span>
+                      <span className="toggle-switch-switch" />
+                    </label>
                   </div>
                 </div>
               </Card.Header>
@@ -497,13 +491,13 @@ function Statistics() {
                   <>
                     <Doughnut data={labelChartData} options={pieOptions} />
                     {visibleLabelTotals.length > 0 && (
-                      <div className="mt-3 small">
+                      <div className="small label-list-container">
                         <div className="d-flex text-muted fw-semibold mb-2">
                           <div style={{ width: '40%' }}>{t('dashboard.label')}</div>
                           <div className="flex-grow-1 text-end">{t(`statistics.${labelType.toLowerCase()}`)}</div>
                         </div>
-                        <div className="d-flex flex-column gap-2">
-                          {visibleLabelTotals.slice(0, 10).map((lab) => (
+                        <div className="d-flex flex-column gap-2 label-list-scroll">
+                          {visibleLabelTotals.map((lab) => (
                             <div key={lab.id} className="d-flex align-items-center gap-2" aria-label={`label-${labelType}`}>
                               <span
                                 className="label-pill text-truncate"

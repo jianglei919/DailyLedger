@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Form, Button, Row, Col, ButtonGroup, ListGroup, Tabs, Tab } from 'react-bootstrap';
+import { Modal, Form, Button, Row, Col, ListGroup } from 'react-bootstrap';
 import { transactionApi, categoryApi, labelApi } from '../services/api';
 
-const EMOJI_ICONS = ['💰', '🍔', '🚗', '🏠', '💵', '💊', '🎬', '🛒', '✈️', '📱', '💡', '🎓', '🎨', '⚡', '🎯', '📚', '🎮', '☕', '🍕', '🚕', '🏋️'];
-const LABEL_COLORS = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#64a502ff', '#22c55e', '#10b981', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
+const EMOJI_ICONS = [
+  '💰', '🍔', '🚗', '🏠', '💵', '💊', '🎬', '🛒', '✈️', '📱', 
+  '💡', '🎓', '🎨', '⚡', '🎯', '📚', '🎮', '☕', '🍕', '🚕', 
+  '🏋️', '💳', '🏦', '📊', '💼', '🏥', '🔧', '🔨', '⚙️', '🛠️',
+  '📄', '📋', '📝', '🧾', '💸', '💷', '💶', '💴', '🎁', '🎉',
+  '🍽️', '🥗', '🍜', '🍺', '🍷', '🚌', '🚇', '🚲', '⛽', '🏪',
+  '🏬', '💄', '👔', '👗', '👟', '📺', '💻', '⌚', '📷', '🎵',
+  '🏃', '⚽', '🎾', '🏊', '🧘', '🛏️', '🚿', '🧹', '🧺', '📮'
+];
+const LABEL_COLORS = [
+  '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#64a502ff', '#22c55e', '#10b981', 
+  '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', 
+  '#ec4899', '#f43f5e', '#fb7185', '#fb923c', '#fbbf24', '#a3e635', '#4ade80', '#34d399',
+  '#2dd4bf', '#22d3ee', '#60a5fa', '#818cf8', '#a78bfa', '#c084fc', '#e879f9', '#f472b6',
+  '#be123c', '#c2410c', '#a16207', '#4d7c0f', '#15803d', '#047857', '#0f766e', '#0e7490',
+  '#0369a1', '#1e40af', '#4338ca', '#6d28d9', '#7e22ce', '#a21caf', '#be185d', '#881337'
+];
+
 
 function AddTransactionModal({ show, onHide, onSuccess }) {
   const [activeType, setActiveType] = useState('Expenses');
@@ -111,25 +127,23 @@ function AddTransactionModal({ show, onHide, onSuccess }) {
           {error && <div className="alert alert-danger">{error}</div>}
 
           {/* Type Selector */}
-          <div className="mb-3 d-flex justify-content-center">
-            <ButtonGroup className="type-selector d-flex flex-row flex-nowrap w-100" style={{ maxWidth: '400px' }}>
-              <Button
-                variant={activeType === 'Expenses' ? 'danger' : 'outline-danger'}
-                onClick={() => setActiveType('Expenses')}
-                className="rounded-pill-start flex-fill"
-                style={{ padding: '8px 0' }}
-              >
-                💸 Expenses
-              </Button>
-              <Button
-                variant={activeType === 'Income' ? 'success' : 'outline-success'}
-                onClick={() => setActiveType('Income')}
-                className="rounded-pill-end flex-fill"
-                style={{ padding: '8px 0' }}
-              >
-                💰 Income
-              </Button>
-            </ButtonGroup>
+          <div className="d-flex justify-content-center" style={{ marginBottom: '8px' }}>
+            <div className="toggle-switch-container toggle-switch-transaction" style={{ width: '100%', maxWidth: 'none' }}>
+              <input
+                type="checkbox"
+                id="transactionTypeToggle"
+                className="toggle-switch-input"
+                checked={activeType === 'Income'}
+                onChange={(e) => setActiveType(e.target.checked ? 'Income' : 'Expenses')}
+              />
+              <label htmlFor="transactionTypeToggle" className="toggle-switch-label">
+                <span className="toggle-switch-inner">
+                  <span className="toggle-switch-icon-off">💸 Expenses</span>
+                  <span className="toggle-switch-icon-on">💰 Income</span>
+                </span>
+                <span className="toggle-switch-switch" />
+              </label>
+            </div>
           </div>
 
           {/* Transaction Form */}
@@ -327,53 +341,73 @@ function CategoryManagerModal({ show, onHide, categories, onUpdate }) {
       <Modal.Body>
         {error && <div className="alert alert-danger alert-sm">{error}</div>}
         
-        <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
-          <Tab eventKey="Expenses" title="💸 Expenses">
-            <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
-              <CategoryList
-                categories={filteredCategories}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            </div>
-          </Tab>
-          <Tab eventKey="Income" title="💰 Income">
-            <div style={{ maxHeight: '280px', overflowY: 'auto' }}>
-              <CategoryList
-                categories={filteredCategories}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            </div>
-          </Tab>
-        </Tabs>
+        <div className="d-flex justify-content-center" style={{ marginBottom: '8px' }}>
+          <div className="toggle-switch-container toggle-switch-category" style={{ width: '100%', maxWidth: 'none' }}>
+            <input
+              type="checkbox"
+              id="categoryTypeToggle"
+              className="toggle-switch-input"
+              checked={activeTab === 'Income'}
+              onChange={(e) => setActiveTab(e.target.checked ? 'Income' : 'Expenses')}
+            />
+            <label htmlFor="categoryTypeToggle" className="toggle-switch-label">
+              <span className="toggle-switch-inner">
+                <span className="toggle-switch-icon-off">💸 Expenses</span>
+                <span className="toggle-switch-icon-on">💰 Income</span>
+              </span>
+              <span className="toggle-switch-switch" />
+            </label>
+          </div>
+        </div>
+
+        <div style={{ maxHeight: '190px', overflowY: 'auto' }}>
+          <CategoryList
+            categories={filteredCategories}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </div>
 
         <Form onSubmit={handleSave} className="border-top pt-3">
           <h6 className="mb-3">{editingCategory ? 'Edit Category' : 'Add Category'}</h6>
           <Row className="g-2">
-            <Col xs={8}>
+            <Col xs={12}>
               <Form.Control
                 size="sm"
-                placeholder="Category name"
+                placeholder="Enter category name..."
                 value={categoryForm.name}
                 onChange={(e) => setCategoryForm({ ...categoryForm, name: e.target.value })}
                 required
               />
             </Col>
-            <Col xs={4}>
-              <Form.Select
-                size="sm"
-                value={categoryForm.icon}
-                onChange={(e) => setCategoryForm({ ...categoryForm, icon: e.target.value })}
-              >
+            <Col xs={12}>
+              <div className="icon-selector-grid" title="Select an icon">
                 {EMOJI_ICONS.map(icon => (
-                  <option key={icon} value={icon}>{icon}</option>
+                  <div
+                    key={icon}
+                    onClick={() => setCategoryForm({ ...categoryForm, icon })}
+                    className="icon-selector-item"
+                    style={{
+                      fontSize: '1.5rem',
+                      cursor: 'pointer',
+                      padding: '6px',
+                      borderRadius: '8px',
+                      border: categoryForm.icon === icon ? '2px solid #3b82f6' : '2px solid transparent',
+                      backgroundColor: categoryForm.icon === icon ? '#dbeafe' : 'transparent',
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    title={icon}
+                  >
+                    {icon}
+                  </div>
                 ))}
-              </Form.Select>
+              </div>
             </Col>
             <Col xs={12}>
-              <Form.Label className="small text-muted mb-1">Color</Form.Label>
-              <div className="d-flex flex-wrap gap-2">
+              <div className="color-picker-container" title="Select a color">
                 {LABEL_COLORS.map(color => (
                   <div
                     key={color}
@@ -524,18 +558,16 @@ function LabelManagerModal({ show, onHide, labels, onUpdate }) {
           <h6 className="mb-3">{editingLabel ? 'Edit Label' : 'Add Label'}</h6>
           <Row className="g-3">
             <Col xs={12}>
-              <Form.Label className="small text-muted mb-1">Label Name</Form.Label>
               <Form.Control
                 size="sm"
-                placeholder="Label name"
+                placeholder="Enter label name..."
                 value={labelForm.name}
                 onChange={(e) => setLabelForm({ ...labelForm, name: e.target.value })}
                 required
               />
             </Col>
             <Col xs={12}>
-              <Form.Label className="small text-muted mb-1">Color</Form.Label>
-              <div className="d-flex flex-wrap gap-2">
+              <div className="color-picker-container" title="Select a color">
                 {LABEL_COLORS.map(color => (
                   <div
                     key={color}

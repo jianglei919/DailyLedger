@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Row, Col, Card, Button, Table, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import {
   Chart as ChartJS,
@@ -328,8 +328,12 @@ function Statistics() {
         }
       });
 
-    return Object.values(map).sort((a, b) => (b.expenses + b.income) - (a.expenses + a.income));
-  }, [transactions]);
+    return Object.values(map).sort((a, b) => {
+      const aAmount = labelType === 'Expenses' ? a.expenses : a.income;
+      const bAmount = labelType === 'Expenses' ? b.expenses : b.income;
+      return bAmount - aAmount;
+    });
+  }, [transactions, labelType]);
 
   const visibleLabelTotals = useMemo(
     () =>
@@ -350,7 +354,7 @@ function Statistics() {
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                   <div className="fw-bold">{t('statistics.spendingOverview')}</div>
-                  <div className="d-flex align-items-center gap-2 flex-nowrap">
+                  <div className="d-flex align-items-center gap-2 flex-wrap">
                     <Form.Select
                       size="sm"
                       style={{
@@ -369,9 +373,6 @@ function Statistics() {
                       <option value="month">{t('statistics.month')}</option>
                       <option value="year">{t('statistics.year')}</option>
                     </Form.Select>
-                    <Button size="sm" variant="outline-secondary" onClick={fetchData}>
-                      {t('common.refresh')}
-                    </Button>
                   </div>
                 </div>
                 {loading ? (

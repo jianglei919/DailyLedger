@@ -27,6 +27,9 @@ function Statistics() {
   const [categoryType, setCategoryType] = useState('Expenses');
   const [labelType, setLabelType] = useState('Expenses');
   const [timeRange, setTimeRange] = useState('month'); // week | month | year
+  
+  // State for selected period (updated when clicking chart bars)
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -92,6 +95,7 @@ function Statistics() {
 
       return {
         labels: periods.map((p) => p.label),
+        keys: periods.map((p) => p.key),
         incomeData: periods.map((p) => buckets[p.key].income),
         expenseData: periods.map((p) => buckets[p.key].expenses)
       };
@@ -119,6 +123,7 @@ function Statistics() {
     }
 
     if (timeRange === 'year') {
+      // Show last 4 years
       const now = new Date();
       const periods = [];
       for (let i = 3; i >= 0; i -= 1) {
@@ -128,7 +133,7 @@ function Statistics() {
       return aggregate(periods, (d) => `${d.getFullYear()}`);
     }
 
-    // default: month (last 6 months)
+    // default: last 6 months
     const now = new Date();
     const periods = [];
     for (let i = 5; i >= 0; i -= 1) {
@@ -140,9 +145,66 @@ function Statistics() {
     return aggregate(periods, (d) => `${d.getFullYear()}-${d.getMonth()}`);
   }, [transactions, timeRange]);
 
+  // Auto-select current month on initial load
+  useEffect(() => {
+    if (!selectedPeriod && timeSeries.keys.length > 0 && timeRange === 'month') {
+      const now = new Date();
+      const currentMonthKey = `${now.getFullYear()}-${now.getMonth()}`;
+      const currentIndex = timeSeries.keys.findIndex(key => key === currentMonthKey);
+      
+      if (currentIndex !== -1) {
+        setSelectedPeriod({
+          key: currentMonthKey,
+          label: timeSeries.labels[currentIndex],
+          timeRange: 'month'
+        });
+      }
+    }
+  }, [timeSeries.keys, timeSeries.labels, timeRange, selectedPeriod]);
+
+  // Filter transactions based on selected period
+  const filteredTransactions = useMemo(() => {
+    if (!selectedPeriod) return transactions;
+
+    const parseTransactionDate = (tx) => {
+      if (tx.dateString) {
+        const parts = tx.dateString.split('-').map(p => parseInt(p, 10));
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+      }
+      const d = new Date(tx.date);
+      return Number.isNaN(d.getTime()) ? null : d;
+    };
+
+    return transactions.filter((tx) => {
+      const d = parseTransactionDate(tx);
+      if (!d) return false;
+
+      const key = selectedPeriod.key;
+      const range = selectedPeriod.timeRange;
+
+      if (range === 'week') {
+        // Week key format: "YYYY-Wnn" (Sunday-based)
+        const day = d.getDay();
+        const sunday = new Date(d);
+        sunday.setDate(d.getDate() - day);
+        const txWeekKey = `${sunday.getFullYear()}-W${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
+        return txWeekKey === key;
+      } else if (range === 'month') {
+        // Month key format: "year-month"
+        const txMonthKey = `${d.getFullYear()}-${d.getMonth()}`;
+        return txMonthKey === key;
+      } else if (range === 'year') {
+        // Year key format: "year"
+        const txYearKey = `${d.getFullYear()}`;
+        return txYearKey === key;
+      }
+      return false;
+    });
+  }, [transactions, selectedPeriod]);
+
   const categoryRanking = useMemo(() => {
     const categoryMap = {};
-    transactions
+    filteredTransactions
       .filter((tx) => tx.categoryId)
       .forEach((tx) => {
         const catId = tx.categoryId._id || tx.categoryId;
@@ -165,7 +227,7 @@ function Statistics() {
       });
 
     return Object.values(categoryMap).sort((a, b) => b.total - a.total);
-  }, [transactions]);
+  }, [filteredTransactions]);
 
   const chartData = useMemo(
     () => ({
@@ -206,7 +268,7 @@ function Statistics() {
 
   const labelChartData = useMemo(() => {
     const labelMap = {};
-    transactions
+    filteredTransactions
       .filter((tx) => tx.labelId && tx.type === labelType)
       .forEach((tx) => {
         const labelId = tx.labelId._id || tx.labelId;
@@ -233,19 +295,74 @@ function Statistics() {
         }
       ]
     };
-  }, [transactions, labelType]);
+  }, [filteredTransactions, labelType]);
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: true, position: 'top' },
-      tooltip: { mode: 'index', intersect: false }
-    },
-    scales: {
-      x: { stacked: false },
-      y: { stacked: false, beginAtZero: true }
-    }
-  };
+  // Custom plugin to highlight selected bar with background
+  const highlightPlugin = useMemo(() => {
+    const selectedIndex = selectedPeriod 
+      ? timeSeries.keys.findIndex(key => key === selectedPeriod.key)
+      : -1;
+
+    return {
+      id: 'highlightBar',
+      beforeDatasetsDraw: (chart) => {
+        if (selectedIndex === -1) return;
+        
+        const { ctx, chartArea: { top, bottom, left, right } } = chart;
+        const meta = chart.getDatasetMeta(0);
+        
+        if (!meta || !meta.data.length === 0) return;
+        
+        const totalBars = meta.data.length;
+        const categoryWidth = (right - left) / totalBars;
+        
+        // Calculate the left boundary of the selected category
+        const categoryLeft = left + (selectedIndex * categoryWidth);
+        
+        ctx.save();
+        ctx.fillStyle = 'rgba(229, 231, 235, 0.7)'; // Light gray background
+        ctx.fillRect(
+          categoryLeft,
+          top,
+          categoryWidth,
+          bottom - top
+        );
+        ctx.restore();
+      }
+    };
+  }, [timeSeries.keys, selectedPeriod]);
+
+  const chartOptions = useMemo(() => {
+    return {
+      responsive: true,
+      plugins: {
+        legend: { display: true, position: 'top' },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { stacked: false },
+        y: { stacked: false, beginAtZero: true }
+      },
+      onClick: (event, activeElements) => {
+        if (activeElements && activeElements.length > 0) {
+          const clickIndex = activeElements[0].index;
+          // Directly access timeSeries here
+          if (timeSeries.keys && timeSeries.keys[clickIndex]) {
+            const key = timeSeries.keys[clickIndex];
+            setSelectedPeriod({
+              key,
+              label: timeSeries.labels[clickIndex],
+              timeRange
+            });
+          }
+        }
+      },
+      onHover: (event, activeElements) => {
+        // Always show pointer cursor when hovering over bars
+        event.native.target.style.cursor = activeElements.length > 0 ? 'pointer' : 'default';
+      }
+    };
+  }, [timeSeries, timeRange]);
 
   const pieOptions = {
     responsive: true,
@@ -274,7 +391,7 @@ function Statistics() {
 
   const categoryTotals = useMemo(() => {
     const map = {};
-    transactions
+    filteredTransactions
       .filter((tx) => tx.categoryId)
       .forEach((tx) => {
         const id = tx.categoryId._id || tx.categoryId;
@@ -296,7 +413,7 @@ function Statistics() {
       });
 
     return Object.values(map).sort((a, b) => (b.expenses + b.income) - (a.expenses + a.income));
-  }, [transactions]);
+  }, [filteredTransactions]);
 
   const visibleCategoryTotals = useMemo(
     () =>
@@ -308,7 +425,7 @@ function Statistics() {
 
   const labelTotals = useMemo(() => {
     const map = {};
-    transactions
+    filteredTransactions
       .filter((tx) => tx.labelId)
       .forEach((tx) => {
         const id = tx.labelId._id || tx.labelId;
@@ -333,7 +450,7 @@ function Statistics() {
       const bAmount = labelType === 'Expenses' ? b.expenses : b.income;
       return bAmount - aAmount;
     });
-  }, [transactions, labelType]);
+  }, [filteredTransactions, labelType]);
 
   const visibleLabelTotals = useMemo(
     () =>
@@ -354,33 +471,40 @@ function Statistics() {
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                   <div className="fw-bold">{t('statistics.spendingOverview')}</div>
-                  <div className="d-flex align-items-center gap-2 flex-wrap">
-                    <Form.Select
-                      size="sm"
-                      style={{
-                        minWidth: '110px',
-                        maxWidth: '140px',
-                        backgroundColor: '#f3f4f6',
-                        color: '#4b5563',
-                        border: '1px solid #e5e7eb',
-                        boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.05)'
-                      }}
-                      aria-label="time range selector"
-                      value={timeRange}
-                      onChange={(e) => setTimeRange(e.target.value)}
-                    >
-                      <option value="week">{t('statistics.week')}</option>
-                      <option value="month">{t('statistics.month')}</option>
-                      <option value="year">{t('statistics.year')}</option>
-                    </Form.Select>
-                  </div>
+                  <Form.Select
+                    size="sm"
+                    style={{
+                      minWidth: '110px',
+                      maxWidth: '140px',
+                      backgroundColor: '#f3f4f6',
+                      color: '#4b5563',
+                      border: '1px solid #e5e7eb',
+                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.05)'
+                    }}
+                    aria-label="time range selector"
+                    value={timeRange}
+                    onChange={(e) => {
+                      setTimeRange(e.target.value);
+                      setSelectedPeriod(null);
+                    }}
+                  >
+                    <option value="week">{t('statistics.week')}</option>
+                    <option value="month">{t('statistics.month')}</option>
+                    <option value="year">{t('statistics.year')}</option>
+                  </Form.Select>
                 </div>
                 {loading ? (
                   <div className="loading">
                     <div className="loading-spinner" />
                   </div>
                 ) : (
-                  <Bar data={chartData} options={chartOptions} height={80} />
+                  <Bar 
+                    key={`${timeRange}-${selectedPeriod?.key || 'none'}`}
+                    data={chartData} 
+                    options={chartOptions}
+                    plugins={[highlightPlugin]}
+                    height={80} 
+                  />
                 )}
               </Card.Body>
             </Card>

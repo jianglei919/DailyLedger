@@ -133,15 +133,37 @@ function Dashboard() {
         {error && <div className="alert alert-danger">{error}</div>}
 
         {/* Month Selector (title removed as requested) */}
-        <div className="mb-3">
-          <Form.Group>
+        <div className="mb-3 d-flex align-items-center gap-2">
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => {
+              const [year, month] = selectedMonth.split('-').map(Number);
+              const prevMonth = new Date(year, month - 2, 1);
+              setSelectedMonth(`${prevMonth.getFullYear()}-${String(prevMonth.getMonth() + 1).padStart(2, '0')}`);
+            }}
+          >
+            ← {t('dashboard.previousMonth')}
+          </Button>
+          <Form.Group className="mb-0">
             <Form.Control
               type="month"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              style={{ maxWidth: isMobile ? '100%' : '200px' }}
+              style={{ maxWidth: isMobile ? '150px' : '200px' }}
             />
           </Form.Group>
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => {
+              const [year, month] = selectedMonth.split('-').map(Number);
+              const nextMonth = new Date(year, month, 1);
+              setSelectedMonth(`${nextMonth.getFullYear()}-${String(nextMonth.getMonth() + 1).padStart(2, '0')}`);
+            }}
+          >
+            {t('dashboard.nextMonth')} →
+          </Button>
         </div>
 
         {/* Summary Cards */}

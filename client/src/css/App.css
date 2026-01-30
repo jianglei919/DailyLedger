@@ -763,7 +763,7 @@ main {
 .label-pill {
   padding: 4px 10px;
   border-radius: 999px;
-  color: #0f172a;
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.8rem;
 }
@@ -1104,7 +1104,7 @@ main {
   display: inline-block;
   padding: 4px 10px;
   border-radius: 999px;
-  color: #0f172a;
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.8rem;
   max-width: 100px;

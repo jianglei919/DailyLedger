@@ -1,7 +1,7 @@
 {
   "name": "daily-ledger-server",
   "version": "1.0.0",
-  "description": "Daily Ledger Backend - Node.js + Express + MongoDB",
+  "description": "Spend Harbor Backend - Node.js + Express + MongoDB",
   "engines": {
     "node": "18.x"
   },

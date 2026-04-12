@@ -5,7 +5,6 @@
 ### 1. 部署配置文件 ✅
 
 - ✅ **render.yaml** - Blueprint 配置文件，支持一键部署
-
   - 自动配置前后端服务
   - 自动设置环境变量关联
   - 自动配置 SPA 路由重定向
@@ -19,14 +18,13 @@
 - ✅ **server/src/index.js** - 健康检查端点
   ```javascript
   app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", message: "Daily Ledger API is running" });
+    res.json({ status: "ok", message: "Spend Harbor API is running" });
   });
   ```
 
 ### 2. 环境配置文件 ✅
 
 - ✅ **server/.env.example** - 后端环境变量模板
-
   - 更新了 MongoDB URI 格式
   - 添加了 Render 部署说明
   - 增强了安全提示
@@ -39,14 +37,12 @@
 ### 3. 部署文档 ✅
 
 - ✅ **README.md** - 更新了部署章节
-
   - 完整的 Render 部署指南
   - Blueprint 和手动部署两种方法
   - MongoDB Atlas 配置说明
   - 常见问题和解决方案
 
 - ✅ **RENDER_DEPLOYMENT.md** - 详细的部署文档（18 页）
-
   - 准备工作
   - 两种部署方法详解
   - MongoDB Atlas 配置
@@ -57,7 +53,6 @@
   - 监控和维护
 
 - ✅ **RENDER_QUICKSTART.md** - 快速入门指南
-
   - 一页纸快速部署
   - 关键步骤提炼
   - 重要提示汇总
@@ -93,7 +88,6 @@
 ### 6. GitIgnore 优化 ✅
 
 - ✅ **client/.gitignore** - 前端忽略规则
-
   - 依赖包
   - 构建输出
   - 环境文件
@@ -259,7 +253,7 @@ REACT_APP_API_URL=...           # Blueprint 自动设置
 
 ## 🎉 总结
 
-Daily Ledger 项目已完全准备好部署到 Render！
+Spend Harbor 项目已完全准备好部署到 Render！
 
 ### 主要改进
 

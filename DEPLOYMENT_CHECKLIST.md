@@ -65,7 +65,7 @@
 ### 后端验证
 
 - [ ] 访问 `https://daily-ledger-api.onrender.com/api/health`
-- [ ] 返回 `{"status": "ok", "message": "Daily Ledger API is running"}`
+- [ ] 返回 `{"status": "ok", "message": "Spend Harbor API is running"}`
 - [ ] 检查 Render Dashboard 日志，无错误信息
 - [ ] 数据库连接成功（日志显示 "✅ Application connected to MongoDB"）
 

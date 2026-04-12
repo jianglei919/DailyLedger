@@ -1,8 +1,8 @@
-# Daily Ledger - 中文代码注释完成总结
+# Spend Harbor - 中文代码注释完成总结
 
 ## 📋 工作完成概览
 
-本次代码注释工作已完成对 **Daily Ledger** 项目的核心代码库的系统化中文注释添加。
+本次代码注释工作已完成对 **Spend Harbor** 项目的核心代码库的系统化中文注释添加。
 
 ### 统计数据
 
@@ -20,20 +20,17 @@
 #### 1. 数据模型层 (Models)
 
 - **User.js** ✅ 完成
-
   - Schema 字段详细说明
   - pre-save 密码加密钩子说明
   - comparePassword 实例方法注释
   - toJSON 方法的密码排除机制说明
 
 - **Transaction.js** ✅ 完成
-
   - 交易数据结构说明
   - 日期、金额、类型字段注释
   - 4 个复合索引的查询优化策略说明
 
 - **Category.js** ✅ 完成
-
   - 分类数据结构说明
   - 唯一索引约束说明
   - 颜色和图标 UI 字段用途说明
@@ -46,7 +43,6 @@
 #### 2. 业务逻辑控制层 (Controllers)
 
 - **userController.js** ✅ 完成
-
   - `registerUser()` - JSDoc 文档 + 注册验证步骤说明
   - `loginUser()` - JWT 生成和密码验证流程说明
   - `getUserProfile()` - 获取资料逻辑说明
@@ -55,14 +51,12 @@
   - `generateToken()` - Token 生成机制说明
 
 - **transactionController.js** ✅ 完成
-
   - `getTransactions()` - 完整的查询、筛选、分页、日期格式化说明
   - `createTransaction()` - 类型验证、分类关联、日期处理说明
   - `updateTransaction()` - 更新验证和 findByIdAndUpdate 说明
   - `deleteTransaction()` - 权限验证和删除逻辑说明
 
 - **categoryController.js** ✅ 完成
-
   - `getCategories()` - 类型筛选查询说明
   - `createCategory()` - 唯一性验证和 UI 字段说明
   - `updateCategory()` - Schema 验证说明
@@ -84,20 +78,17 @@
 #### 4. 路由层 (Routes)
 
 - **userRoutes.js** ✅ 完成
-
   - 注册路由 - 公开访问
   - 登录路由 - 公开访问
   - 资料路由 - 需要认证
   - 修改密码路由 - 需要认证
 
 - **transactionRoutes.js** ✅ 完成
-
   - 全局认证中间件说明
   - GET/POST 路由的功能说明
   - PUT/DELETE 路由的功能说明
 
 - **categoryRoutes.js** ✅ 完成
-
   - 路由保护中间件说明
   - CRUD 操作路由定义
 
@@ -108,7 +99,6 @@
 #### 5. 配置层 (Configuration)
 
 - **env.js** ✅ 完成
-
   - dotenv 加载机制说明
   - 文件优先级说明 (.env.production > .env > 默认)
   - ES6 模块中获取 \_\_dirname 的方法说明
@@ -133,13 +123,11 @@
 #### 1. 核心模块 (Core)
 
 - **App.js** ✅ 完成
-
   - 文件用途说明：路由配置和认证上下文
   - 组件导入说明
   - AppRoutes 组件说明
 
 - **context/AuthContext.js** ✅ 完成
-
   - AuthContext 创建说明
   - `AuthProvider` 组件说明
   - useEffect 组件挂载时的状态恢复说明
@@ -159,7 +147,6 @@
 #### 2. 组件 (Components)
 
 - **components/PrivateRoute.js** ✅ 完成
-
   - 文件用途说明：路由保护
   - 加载状态处理说明
   - 未登录重定向说明
@@ -296,7 +283,6 @@ client/src/
 ### 3. 分类和标签系统
 
 - **分类**:
-
   - 支持两种类型：Expenses(支出) 和 Income(收入)
   - 同一用户同一类型下分类名称唯一
   - 包含 color 和 icon 用于 UI 显示
@@ -408,7 +394,7 @@ const filter = { userId: req.user._id };
 
 ## 总结
 
-本次代码注释工作为 Daily Ledger 项目建立了**统一的中文注释规范**，覆盖了：
+本次代码注释工作为 Spend Harbor 项目建立了**统一的中文注释规范**，覆盖了：
 
 - ✅ 所有核心数据模型
 - ✅ 所有业务逻辑控制器

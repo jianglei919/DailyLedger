@@ -2,7 +2,7 @@
   "name": "daily-ledger-client",
   "version": "1.0.0",
   "private": true,
-  "description": "Daily Ledger - React Frontend with React Bootstrap",
+  "description": "Spend Harbor - React Frontend with React Bootstrap",
   "engines": {
     "node": "18.x"
   },

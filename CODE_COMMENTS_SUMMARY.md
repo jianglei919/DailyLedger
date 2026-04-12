@@ -1,8 +1,8 @@
-# Daily Ledger 中文代码注释完成报告
+# Spend Harbor 中文代码注释完成报告
 
 ## 项目概览
 
-Daily Ledger 是一个基于 React + Node.js + MongoDB 的个人日账簿应用，提供收入支出管理、统计分析和国际化支持。
+Spend Harbor 是一个基于 React + Node.js + MongoDB 的个人日账簿应用，提供收入支出管理、统计分析和国际化支持。
 
 ## 注释工作完成状态
 
@@ -20,7 +20,6 @@ Daily Ledger 是一个基于 React + Node.js + MongoDB 的个人日账簿应用�
 **业务逻辑控制器** (Controllers):
 
 - ✅ `userController.js` - 用户管理完整注释
-
   - registerUser() - 注册逻辑、验证流程
   - loginUser() - 登录验证和 Token 生成
   - getUserProfile() - 获取用户资料
@@ -28,14 +27,12 @@ Daily Ledger 是一个基于 React + Node.js + MongoDB 的个人日账簿应用�
   - changePassword() - 修改密码的安全验证
 
 - ✅ `transactionController.js` - 交易管理完整注释
-
   - getTransactions() - 查询、筛选、分页、日期格式化
   - createTransaction() - 创建交易、类型验证、日期处理
   - updateTransaction() - 更新交易
   - deleteTransaction() - 删除交易
 
 - ✅ `categoryController.js` - 分类管理完整注释
-
   - getCategories() - 查询分类、类型筛选
   - createCategory() - 创建分类、唯一性验证
   - updateCategory() - 更新分类
@@ -75,7 +72,6 @@ Daily Ledger 是一个基于 React + Node.js + MongoDB 的个人日账簿应用�
 
 - ✅ `App.js` - 应用入口、路由配置注释
 - ✅ `context/AuthContext.js` - 认证上下文完整注释
-
   - login() 函数 - 登录流程、Token 存储
   - register() 函数 - 注册流程
   - logout() 函数 - 登出清除
@@ -157,7 +153,7 @@ const variable = value; // 变量用途和含义说明
 ## 项目架构总览
 
 ```
-Daily Ledger 项目
+Spend Harbor 项目
 ├── 后端 (Node.js + Express + MongoDB)
 │   ├── Models - 数据模型（User, Transaction, Category, Label）
 │   ├── Controllers - 业务逻辑处理层

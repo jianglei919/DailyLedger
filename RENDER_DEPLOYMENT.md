@@ -1,6 +1,6 @@
 # Render 部署指南
 
-本文档提供了将 Daily Ledger 应用部署到 Render 的详细步骤。
+本文档提供了将 Spend Harbor 应用部署到 Render 的详细步骤。
 
 ## 📋 目录
 
@@ -46,7 +46,6 @@ git push -u origin main
    项目根目录应该有 `render.yaml` 文件。
 
 2. **在 Render 创建 Blueprint**
-
    - 登录 Render Dashboard
    - 点击 "New +" → "Blueprint"
    - 连接你的 GitHub 仓库
@@ -56,7 +55,6 @@ git push -u origin main
 3. **配置环境变量**
 
    部署后，在 Render Dashboard 中：
-
    - 找到 `daily-ledger-api` 服务
    - 进入 "Environment" 标签
    - 手动设置 `MONGODB_URI`：
@@ -65,13 +63,11 @@ git push -u origin main
      ```
 
 4. **等待部署完成**
-
    - 后端服务通常需要 3-5 分钟
    - 前端服务通常需要 2-4 分钟
    - 可以在 "Logs" 标签查看部署进度
 
 5. **获取 URLs**
-
    - 后端 URL: `https://daily-ledger-api.onrender.com`
    - 前端 URL: `https://daily-ledger.onrender.com`
 
@@ -169,7 +165,6 @@ REACT_APP_API_URL=https://daily-ledger-api.onrender.com/api
 ### 配置数据库访问
 
 1. **创建数据库用户**
-
    - 进入 "Database Access"
    - 点击 "Add New Database User"
    - 创建用户名和密码（记住这些凭证）
@@ -229,7 +224,7 @@ mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/daily-ledger?retryWri
 ```json
 {
   "status": "ok",
-  "message": "Daily Ledger API is running"
+  "message": "Spend Harbor API is running"
 }
 ```
 
@@ -308,12 +303,10 @@ mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/daily-ledger?retryWri
 Render 支持自动部署：
 
 1. **GitHub 集成**
-
    - 推送到 `main` 分支自动触发部署
    - 可以在 Settings 中配置自动部署
 
 2. **手动触发**
-
    - 在 Render Dashboard 点击 "Manual Deploy" → "Deploy latest commit"
 
 3. **部署通知**

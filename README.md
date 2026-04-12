@@ -1,4 +1,4 @@
-# Daily Ledger 📊
+# Spend Harbor 📊
 
 一个现代化的个人财务管理应用，用于跟踪和管理日常收入和支出。
 

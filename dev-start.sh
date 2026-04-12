@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Daily Ledger - 快速启动脚本
+# Spend Harbor - 快速启动脚本
 # 此脚本用于在本地开发环境中快速启动前后端服务
 
-echo "🚀 Starting Daily Ledger Development Environment..."
+echo "🚀 Starting Spend Harbor Development Environment..."
 echo ""
 
 # 检查 Node.js 是否安装

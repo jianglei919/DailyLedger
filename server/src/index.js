@@ -1,5 +1,5 @@
 /**
- * Daily Ledger 后端服务器入口文件
+ * Spend Harbor 后端服务器入口文件
  * 负责启动 Express 服务器，配置中间件，连接数据库，注册路由
  */
 
@@ -51,7 +51,7 @@ try {
 // API 路由配置
 // 健康检查端点 - 用于检测服务是否正常运行
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Daily Ledger API is running' });
+  res.json({ status: 'ok', message: 'Spend Harbor API is running' });
 });
 
 // 注册各模块的路由
@@ -75,5 +75,5 @@ app.use((req, res) => {
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 Daily Ledger API server is running on port ${PORT}`);
+  console.log(`🚀 Spend Harbor API server is running on port ${PORT}`);
 });

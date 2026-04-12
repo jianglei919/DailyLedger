@@ -1,8 +1,8 @@
-# Daily Ledger - 项目结构说明
+# Spend Harbor - 项目结构说明
 
 ## 项目概述
 
-Daily Ledger 是一个全栈个人财务管理应用，用于跟踪收入和支出。采用现代技术栈，支持多语言国际化，现代化 UI 设计：
+Spend Harbor 是一个全栈个人财务管理应用，用于跟踪收入和支出。采用现代技术栈，支持多语言国际化，现代化 UI 设计：
 
 - **前端**: React 18 + React Bootstrap + Axios + i18next
 - **后端**: Node.js + Express + MongoDB
@@ -594,7 +594,7 @@ npm run build
 ```javascript
 {
   "navbar": {
-    "appName": "Daily Ledger",
+    "appName": "Spend Harbor",
     "dashboard": "Dashboard",
     "statistics": "Statistics",
     // ...
@@ -672,7 +672,6 @@ function MyComponent() {
 ### 后端部署
 
 1. **环境准备**:
-
    - Node.js 14+ 运行环境
    - MongoDB 数据库 (本地或 Atlas)
    - 配置生产环境变量
@@ -686,7 +685,6 @@ function MyComponent() {
 1. **构建命令**: `npm run build`
 2. **构建输出**: `build/` 目录
 3. **静态托管**:
-
    - Netlify: 使用 `_redirects` 文件支持 SPA 路由
    - Render: 使用 `render.json` 配置
    - Vercel/GitHub Pages: 需配置重写规则

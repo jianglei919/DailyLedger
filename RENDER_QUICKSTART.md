@@ -14,19 +14,16 @@ git push origin main
 ### 2. 部署步骤
 
 1. **登录 Render**
-
    - 访问 [render.com](https://render.com)
    - 使用 GitHub 账号登录
 
 2. **使用 Blueprint**
-
    - 点击 "New +" → "Blueprint"
    - 选择 GitHub 仓库：`DailyLedger`
    - Render 自动检测 `render.yaml`
    - 点击 "Apply"
 
 3. **配置 MongoDB**
-
    - 在 `daily-ledger-api` 服务中
    - 进入 "Environment" 标签
    - 添加环境变量：
@@ -58,7 +55,7 @@ https://daily-ledger-api.onrender.com/api/health
 ```json
 {
   "status": "ok",
-  "message": "Daily Ledger API is running"
+  "message": "Spend Harbor API is running"
 }
 ```
 
